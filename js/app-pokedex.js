@@ -3,7 +3,7 @@
 
 const pokeApi = {}
 
-function convertPokeApiDetailToPokemon(pokeDetail) {
+function convertPokeApiDetailToGeneration(pokeDetail) {
     const pokemon = {}
 
     pokemon.number = pokeDetail.id
@@ -20,19 +20,19 @@ function convertPokeApiDetailToPokemon(pokeDetail) {
 
     return pokemon
 }
-pokeApi.getPokemonsDetails = (pokemon) => {
+pokeApi.getRegions = (pokemon) => {
     return fetch(pokemon.url)
         .then((response) => response.json())
-        .then(convertPokeApiDetailToPokemon)
+        .then(convertPokeApiDetailToGeneration)
 }
 
-pokeApi.getPokemons = (offset = 0, limit = 5) => {
+pokeApi.getGenerations = (offset = 0, limit = 5) => {
 
     let url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
     return fetch(url)
         .then((response) => response.json())
         .then((jsonBody) => jsonBody.results)
-        .then((pokemons) => pokemons.map(pokeApi.getPokemonsDetails))
+        .then((pokemons) => pokemons.map(pokeApi.getRegions))
         .then((detailRequests) => Promise.all(detailRequests))
         .then((pokemonsDetails) => pokemonsDetails)
 }
@@ -46,7 +46,7 @@ Promise.all([
 
 const loadCard = function(offset = 0, limit = 1282) {
 
-    pokeApi.getPokemons(offset, limit)
+    pokeApi.getGenerations(offset, limit)
         .then((pokemons = []) => pokemons.map((pokes) => {
             console.log();
 

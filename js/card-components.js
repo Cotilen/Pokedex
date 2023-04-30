@@ -1,6 +1,6 @@
 "use strict"
 
-class card extends HTMLElement {
+class card_pokedex extends HTMLElement {
     constructor() {
         super()
 
@@ -209,4 +209,160 @@ class card extends HTMLElement {
     }
 }
 
-customElements.define('card-pokemon', card)
+class card_regions extends HTMLElement {
+    constructor() {
+        super()
+
+        this.shadow = this.attachShadow({ mode: 'open' })
+        this.generation = 'Generation'
+        this.region = 'Region'
+        this.img = null
+    }
+
+    static get observedAttributes() {
+        return ['generation', 'region', 'img']
+
+    }
+
+    attributeChangedCallback(nameAttr, oldValue, newValue) {
+        this[nameAttr] = newValue
+    }
+
+    connectedCallback() {
+        this.shadow.appendChild(this.component())
+        this.shadow.appendChild(this.styles())
+    }
+
+    styles() {
+        const css = document.createElement('style')
+        css.textContent = `
+        .card {
+            font-size: 1.7rem;
+            --background: linear-gradient(to left, #7AC74C 0%, #A6B91A 100%);
+            width: 260px;
+            height: 350px;
+            padding: 5px;
+            border-radius: 1rem;
+            overflow: visible;
+            background: #f7ba2b;
+            background: var(--background);
+            position: relative;
+            z-index: 1;
+            text-transform: capitalize;
+
+        }
+        
+        .card::after {
+            position: absolute;
+            content: "";
+            top: 30px;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            height: 100%;
+            width: 100%;
+            transform: scale(0.8);
+            filter: blur(25px);
+            background: #f7ba2b;
+            background: var(--background);
+            transition: opacity .5s;
+        }
+        
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            --color: #6390F0;
+            background: var(--color);
+            color: #f7ba2b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            border-radius: .7rem;
+            gap: 10px;
+            -webkit-text-stroke: 2px #000;
+        }
+        
+        .card-detail {
+            display: flex;
+            color: #6390F0;
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            gap: 20px;
+            -webkit-text-stroke: 1px #6390F0;
+        }
+        
+        .card .title {
+            font-weight: bold;
+            letter-spacing: .1em;
+        }
+        
+        .card img {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 230px;
+            height: auto;
+            max-height:250px;
+        }
+        
+        
+        /*Hover*/
+        
+        .card:hover::after {
+            opacity: 0;
+        }
+        
+        .card:hover img {
+            opacity: 1;
+        }
+        
+        .card:hover .card-detail {
+            color: #f7ba2b;
+            -webkit-text-stroke: 2px #000;
+            transition: color -webkit-text-stroke 4s;
+        }
+        .generation, .title{
+            margin:0;
+        }
+        `
+
+        return css
+
+    }
+    component() {
+        const card = document.createElement('div')
+        card.classList.add('card')
+
+        const card_info = document.createElement('div')
+        card_info.classList.add('card-info')
+
+        const generation = document.createElement('p')
+        generation.classList.add('generation')
+        generation.textContent = this.generation
+
+        const card_detail = document.createElement('div')
+        card_detail.classList.add('card-detail')
+
+        const title = document.createElement('p')
+        title.classList.add('title')
+        title.textContent = this.region
+
+        const img = document.createElement('img')
+        img.classList.add('img-region')
+        img.src = this.img
+
+        card_detail.append(title, img)
+        card_info.append(generation, card_detail)
+        card.append(card_info)
+
+        return card
+    }
+}
+
+customElements.define('card-pokemon', card_pokedex)
+customElements.define('card-regions', card_regions)

@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/images.css">
     <link rel="stylesheet" href="../css/root.css">
+    <link rel="stylesheet" href="../css/regions.css">
 
-    <script src="../js/app-pokedex.js" defer type="module"></script>
+    <script src="../js/app-regions.js" defer type="module"></script>
     <script src="../js/card-components.js"></script>
     <title>Pokedex</title>
 </head>
@@ -24,12 +25,24 @@
             <a href="/pages/pokedex.html "><img class="nav-img " src="../images/pokedex.png " alt=" "> Pokedex</a>
             <a href="/games  "><img class="nav-img" src="../images/games.png" alt=""> Games</a>
             <a href="/pages/regions.html"><img src="../images/regions.png " class="nav-img " alt=" "> Regions</a>
+
         </nav>
     </header>
     <main id="root ">
-        <div id="container-pokedex">
-            <!-- <card-pokemon class="grass" nome="bulbasaur" number="1" img="../images/sem-imagem.webp" type="grass"></card-pokemon> -->
+        <div id="main-region">
+            <!-- <div class="card">
+                <div class="card-info">
+                    <p class="generation"> Generation I</p>
+                    <div class="card-detail">
+                        <p class="title">Kanto</p>
+                        <img class='img-region' src="../images/regioes/kanto.png" alt="">
+                    </div>
+                </div>
+            </div> -->
+            <card-regions generation='Geração I' region='Kanto' img="../images/regioes/kanto.png"></card-regions>
+
         </div>
+
     </main>
     <footer>
         <div>Copyright 2023 || Cleiton Cruz</div>

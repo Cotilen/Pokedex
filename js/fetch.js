@@ -8,3 +8,17 @@ export const fetchData = async() => {
 
     return {...data }
 }
+
+export const fetchRegion = async() => {
+
+    let list = []
+    const url = `https://pokeapi.co/api/v2/generation/`
+
+    const response = await fetch(url)
+    const data = await response.json()
+
+    data.results.map(element => {
+        list.push(element.url)
+    })
+    return list
+}
