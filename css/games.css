@@ -1,0 +1,13 @@
+main {
+    padding-left: 50px;
+    justify-content: start;
+}
+
+#main-games {
+    width: 100%;
+}
+
+div-games {
+    display: flex;
+    width: 500px;
+}

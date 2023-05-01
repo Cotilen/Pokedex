@@ -364,5 +364,144 @@ class card_regions extends HTMLElement {
     }
 }
 
+class div_games extends HTMLElement {
+    constructor() {
+        super()
+
+        this.shadow = this.attachShadow({ mode: 'open' })
+        this.img = null
+        this.name = 'Grupo jogos'
+        this.game = null
+        this.game_2 = null
+        this.idGame = null
+        this.idGame_2 = null
+    }
+
+    static get observedAttributes() {
+        return ['img', 'name', 'game', 'game_2', 'idGame', 'idGame_2']
+
+    }
+
+    attributeChangedCallback(nameAttr, oldValue, newValue) {
+        this[nameAttr] = newValue
+    }
+
+    connectedCallback() {
+        this.shadow.appendChild(this.component())
+        this.shadow.appendChild(this.styles())
+    }
+
+    styles() {
+        const css = document.createElement('style')
+        css.textContent = `
+        .poke-icon {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .name {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .button {
+            padding: 0 25px 0 25px;
+        }
+        
+        .games {
+            display: flex;
+            gap: 70px;
+        }
+        
+        .imagem-games {
+            width: 150px;
+            height: 150px;
+        }
+        
+        
+        button {
+            font-family: solid;
+            font-size: 1.7rem;
+            outline: none;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s;
+            background-color: var(--cor-principal);
+        }
+        
+        button:hover {
+            animation: a 0.5s 1 linear;
+        }
+        
+        @keyframes a {
+            0% {
+                transform: scale(0.7, 1.3);
+            }
+            25% {
+                transform: scale(1.3, 0.7);
+            }
+            50% {
+                transform: scale(0.7, 1.3);
+            }
+            75% {
+                transform: scale(1.3, 0.7);
+            }
+            100% {
+                transform: scale(1, 1);
+            }
+        }
+        #null{
+            display:none;
+        }
+        `
+
+        return css
+
+    }
+    component() {
+
+        const version = document.createElement('div')
+
+        const div = document.createElement('a')
+        div.classList.add('button')
+
+        const button = document.createElement('button')
+        button.classList.add('name')
+
+        const img = document.createElement('img')
+        img.classList.add('poke-icon')
+        img.src = this.img
+
+        const name = document.createElement('div')
+        name.textContent = this.name
+
+        const games = document.createElement('div')
+        games.classList.add('games')
+
+        const game = document.createElement('img')
+        game.classList.add('imagem-games')
+        game.src = `${this.game}`
+        game.id = this.game
+
+        const game2 = document.createElement('img')
+        game2.classList.add('imagem-games')
+        game2.src = `${this.game_2}`
+        game2.id = this.game_2
+
+        if (this.game_2 == null) {
+            games.append(game)
+        }
+        games.append(game, game2)
+        button.append(img, name)
+        div.append(button)
+        version.append(div, games)
+
+
+        return version
+    }
+}
+
 customElements.define('card-pokemon', card_pokedex)
 customElements.define('card-regions', card_regions)
+customElements.define('div-games', div_games)

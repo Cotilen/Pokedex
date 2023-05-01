@@ -3,7 +3,7 @@
 
 const pokeApi = {}
 
-function convertPokeApiDetailToGeneration(pokeDetail) {
+function convertPokeApiDetailToGames(pokeDetail) {
     const card = {}
 
     card.id = pokeDetail.id
@@ -13,20 +13,20 @@ function convertPokeApiDetailToGeneration(pokeDetail) {
 
     return card
 }
-pokeApi.getRegions = (region) => {
+pokeApi.getGames = (region) => {
     return fetch(region.url)
         .then((response) => response.json())
-        .then(convertPokeApiDetailToGeneration)
+        .then(convertPokeApiDetailToGames)
 }
 
-pokeApi.getGenerations = async() => {
+pokeApi.getGroupGames = async() => {
 
     const url = `https://pokeapi.co/api/v2/generation/`
 
     return fetch(url)
         .then((response) => response.json())
         .then((jsonBody) => jsonBody.results)
-        .then((generations) => generations.map(pokeApi.getRegions))
+        .then((generations) => generations.map(pokeApi.getGames))
         .then((detailRequests) => Promise.all(detailRequests))
         .then((pokemonsDetails) => pokemonsDetails)
 }
@@ -41,7 +41,7 @@ Promise.all([
 
 const loadCard = function() {
 
-    pokeApi.getGenerations()
+    pokeApi.getGroupGames()
         .then((regioes = []) => regioes.map((regiao) => {
 
 
@@ -64,6 +64,7 @@ const loadCard = function() {
             card.setAttribute('generation', resultado)
             card.setAttribute('region', regiao.region)
             card.setAttribute('img', regiao.img)
+            card.id = regiao.id
             return card
 
         })).then((card) => {

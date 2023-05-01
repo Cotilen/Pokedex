@@ -53,13 +53,14 @@ const loadCard = function(offset = 0, limit = 1282) {
             const pokedex = document.createElement('card-pokemon')
             pokedex.classList.add(`${pokes.type}`)
             pokedex.setAttribute('nome', pokes.name)
-            pokedex.setAttribute('number', pokes.number)
+            pokedex.setAttribute('number', `#${ pokes.number}`)
             pokedex.setAttribute('img', pokes.photo)
                 //Se o pokemon tiver mais de um tipo, entra no if e adiciona,
                 //senão adiciona so o primeiro
             if (pokes.types.length > 1)
                 pokedex.setAttribute('type_2', pokes.types[1])
             pokedex.setAttribute('type', pokes.type)
+            pokedex.id = pokes.number
             return pokedex
 
         })).then((card) => {
