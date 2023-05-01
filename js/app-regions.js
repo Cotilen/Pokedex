@@ -3,6 +3,7 @@
 
 const pokeApi = {}
 
+
 function convertPokeApiDetailToGames(pokeDetail) {
     const card = {}
 
@@ -59,17 +60,32 @@ const loadCard = function() {
                 resultado = regiao.generation.slice(0, -5) + ultimasLetras;
             }
 
+            const link = document.createElement('a')
+            link.id = regiao.region
+            link.href = './detailRegions.html'
+
             const card = document.createElement('card-regions')
 
             card.setAttribute('generation', resultado)
             card.setAttribute('region', regiao.region)
             card.setAttribute('img', regiao.img)
-            card.id = regiao.id
-            return card
+
+            link.append(card)
+
+            link.addEventListener('click', function() {
+                localStorage.setItem('nameRegion', link.id)
+            })
+            return link
 
         })).then((card) => {
 
+
             const div = document.getElementById('main-region')
+
+            div.addEventListener('click', function() {
+
+
+            })
 
             div.replaceChildren(...card)
         })

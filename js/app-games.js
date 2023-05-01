@@ -3,6 +3,9 @@
 
 const pokeApi = {}
 
+let i = 0
+
+
 function convertPokeApiDetailToGames(pokeDetail) {
     const card = {}
 
@@ -62,9 +65,11 @@ const loadCard = function() {
 
             div.setAttribute('img', '../images/pokebola.png')
             div.setAttribute('name', `${nameGame}  ${nameGame2}`)
-            div.setAttribute('game', `../images/games/${group.name}.png`)
+            div.setAttribute('game', group.name)
             if (group.name2 != undefined)
-                div.setAttribute('game_2', `../images/games/${group.name2}.png`)
+                div.setAttribute('game_2', group.name2)
+
+
             return div
 
         })).then((card) => {

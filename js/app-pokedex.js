@@ -61,9 +61,11 @@ const loadCard = function(offset = 0, limit = 1282) {
                 pokedex.setAttribute('type_2', pokes.types[1])
             pokedex.setAttribute('type', pokes.type)
             pokedex.id = pokes.number
+
             return pokedex
 
         })).then((card) => {
+
 
             const div = document.getElementById('container-pokedex')
 

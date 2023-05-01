@@ -481,12 +481,12 @@ class div_games extends HTMLElement {
 
         const game = document.createElement('img')
         game.classList.add('imagem-games')
-        game.src = `${this.game}`
+        game.src = `../images/games/${this.game}.png`
         game.id = this.game
 
         const game2 = document.createElement('img')
         game2.classList.add('imagem-games')
-        game2.src = `${this.game_2}`
+        game2.src = `../images/games/${this.game_2}.png`
         game2.id = this.game_2
 
         if (this.game_2 == null) {
@@ -502,6 +502,92 @@ class div_games extends HTMLElement {
     }
 }
 
+class btn_pokemon extends HTMLElement {
+    constructor() {
+        super()
+
+        this.shadow = this.attachShadow({ mode: 'open' })
+        this.nome = 'Pokemon'
+        this.type = 'type'
+    }
+
+    static get observedAttributes() {
+        return ['nome', 'type']
+
+    }
+
+    attributeChangedCallback(nameAttr, oldValue, newValue) {
+        this[nameAttr] = newValue
+    }
+
+    connectedCallback() {
+        this.shadow.appendChild(this.component())
+        this.shadow.appendChild(this.styles())
+    }
+
+    styles() {
+        const css = document.createElement('style')
+        css.textContent = `
+        .btn {
+            width: 150px;
+            height: 50px;
+            margin: 0.5rem;
+            background: var(--cor-stroke);
+            color: var(--cor-principal);
+            -webkit-text-stroke: 1.5px #000;
+            border: 2px solid #000;
+            border-radius: 0.625rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            font-family:solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            color: var(--cor-stroke);
+        }
+        
+        button:after {
+            content: "";
+            background: var(--cor-principal);
+            position: absolute;
+            z-index: -1;
+            left: -20%;
+            right: -20%;
+            top: 0;
+            bottom: 0;
+            transform: skewX(-45deg) scale(0, 1);
+            transition: all 0.5s;
+        }
+        
+        button:hover:after {
+            transform: skewX(-45deg) scale(1, 1);
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }`
+
+        return css
+
+    }
+    component() {
+
+        const button = document.createElement('button')
+        button.classList.add('btn')
+        button.classList.add(this.type)
+        button.textContent = this.nome
+
+
+        return button
+    }
+}
+
 customElements.define('card-pokemon', card_pokedex)
 customElements.define('card-regions', card_regions)
 customElements.define('div-games', div_games)
+customElements.define('button-pokemon', btn_pokemon)
